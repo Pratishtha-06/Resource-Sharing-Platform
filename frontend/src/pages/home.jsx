@@ -58,7 +58,6 @@ const handleClick=(e)=>{
         </div>
       ))}
     </div>
-  )
-}
-
+  )}
+  
 export default Home
