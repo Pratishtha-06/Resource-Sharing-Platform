@@ -118,3 +118,31 @@ height:40px;
 .download:hover{
   color:blue;
 }
+
+.Loading{
+    display: flex;
+    position: relative;
+    top: 50%;
+    gap:5px;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+.load{
+ width: 15px;
+ height: 15px;
+ border-radius: 10px;
+ border-top:2px solid black;
+ border-bottom:2px solid black;
+ border-left:2px solid black;
+ animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform: rotate(360deg);
+    }
+
+}

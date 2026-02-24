@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors({
     credentials:true,
-    origin:'http://localhost:5173'
+    origin:['http://localhost:5173']
 }));
 app.use('/PDFuploads',express.static(path.join(__dirname,'PDFuploads')));
 
@@ -243,6 +243,22 @@ app.get('/api/get-pdfs',async(req,res)=>{
     console.log("Error in fetching",err);
     res.status(500).json({message:"Error in fetching document"});
    }
+})
+
+//Find-subject
+app.get('/api/get-subject/:subject',async(req,res)=>{
+  try{
+   const {subject} = req.params;
+   const response = await PYQ.find({subject});
+   if(response.length === 0){
+    return res.json({message:"No match found",response});
+   }
+   console.log("Sub",response);
+   res.status(200).json({response});
+  }catch(err){
+    console.log("Error:",err);
+    res.status(500).json({message:"Error in fetching"})
+  }
 })
 
 

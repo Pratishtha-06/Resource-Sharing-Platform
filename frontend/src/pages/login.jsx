@@ -17,6 +17,7 @@ function Login() {
     const navigate = useNavigate();
     const {user,setUser} = useContext(UserContext);
     const screen = ScreenSize();
+    const link = 'https://resource-sharing-platform.onrender.com';
 
     const handleInput=(e)=>{
       const {name,value}  = e.target;
@@ -32,7 +33,7 @@ function Login() {
         setError("All fields are required");
         return;
       }
-     const response = await axios.post('/api/login',{email,password},{withCredentials:true});
+     const response = await axios.post(`${link}/api/login`,{email,password},{withCredentials:true});
      console.log("user",response.data);
 
      if(response.status === 200){

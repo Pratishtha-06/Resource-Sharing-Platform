@@ -5,11 +5,11 @@ import Register from './pages/Register';
 import Home from './pages/home';
 import Profile from './pages/Profile';
 import Layout from './components/Layout';
-import UploadResources from './pages/uploadResources';
+import UploadResources from './pages/UploadResources';
 import UserContextProvider from './components/UserContext';
 import axios from 'axios';
 
-axios.defaults.baseURL='http://localhost:5000';
+axios.defaults.baseURL='https://resource-sharing-platform.onrender.com';
 axios.defaults.withCredentials=true;
 
 function App() {

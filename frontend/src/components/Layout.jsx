@@ -10,7 +10,7 @@ function Layout() {
   const {ready} = useContext(UserContext);
 
   if(!ready){
-   return (<div className='Loading'>Loading....</div>)
+   return (<div className='Loading'><div className='load'></div>Loading....</div>)
   }
 
   return (
