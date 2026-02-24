@@ -6,9 +6,10 @@ export const UserContext = createContext({});
 function UserContextProvider({children}){
     const [user,setUser] = useState(null);
     const [ready,setReady] = useState(false)
-
+    const link = 'https://resource-sharing-platform.onrender.com';
+ 
     useEffect(()=>{
-    axios.get('/api/profile', { withCredentials: true })
+    axios.get(`${link}/api/profile`, { withCredentials: true })
     .then(({data}) => {
       setReady(true);
       setUser(data);      

@@ -13,6 +13,8 @@ function Register() {
     const [error,setError] = useState('');
     const navigate  = useNavigate();
     const screen = ScreenSize();
+    const link = 'https://resource-sharing-platform.onrender.com';
+
 
     const handleInput=(e)=>{
       const {name,value}  = e.target;
@@ -30,7 +32,7 @@ function Register() {
        return;
       }
 
-      const response = await axios.post('/register',{name,email,password},{withCredentials:true});
+      const response = await axios.post(`${link}/register`,{name,email,password},{withCredentials:true});
       setError(response.data.message);
       console.log(response.data.message);
 

@@ -6,11 +6,12 @@ import axios from 'axios';
 function SearchBar() {
   const [subject,setSubject] = useState('');
   const [pdfs,setPDFs] = useState([]);
+  const link = 'https://resource-sharing-platform.onrender.com';
 
   const handleSearch=(e)=>{
     e.preventDefault();
     try{
-      axios.get(`/api/get-subject/${subject}`,{withCredentials:true})
+      axios.get(`${link}/api/get-subject/${subject}`,{withCredentials:true})
       .then((res)=>{
         setPDFs(res.data.response);
       })

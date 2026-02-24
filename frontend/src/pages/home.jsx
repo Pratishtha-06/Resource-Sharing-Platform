@@ -14,7 +14,7 @@ function Home() {
 
 
   useEffect(()=>{
-   const response = axios.get('/api/get-pdfs',{withCredentials:true})
+   const response = axios.get(`${link}/api/get-pdfs`,{withCredentials:true})
    .then((res)=>{
      setPDFs(res.data.allPDF);
    })
@@ -37,7 +37,7 @@ const handleClick=(e)=>{
     <div className='AllFiles'>
       {pdfs.map((i)=>(
         <div className='d-flex flex-column' style={{width:'170px'}} key={i._id}>
-           <embed src={`${link}/PDFuploads/${i.fileName}`} 
+           <embed src={`/PDFuploads/${i.fileName}`} 
                   type="application/pdf" 
                   width="180" 
                   height="220"
@@ -45,14 +45,14 @@ const handleClick=(e)=>{
             />
           <a  className="truncate text-truncate" 
               style={{width:'150px',fontSize:'14px',fontWeight:'bold',color:'black'}}
-              href={`${link}/PDFuploads/${i.fileName.replace('.pdf.pdf','.pdf')}`}>
+              href={`/PDFuploads/${i.fileName.replace('.pdf.pdf','.pdf')}`}>
               {i.title}
           </a>
           <div className='d-flex justify-content-between align-items-center'>
             <div className='truncate text-truncate' style={{fontSize:'13px' , width:'90%'}}>{i.class} • {i.subject} </div>
             <a className='d-flex justify-content-center align-items-center'
                onClick={handleClick}
-               href={`${link}/PDFuploads/${i.fileName}`}
+               href={`/PDFuploads/${i.fileName}`}
                download>
               <Download className='download'/>
             </a>  

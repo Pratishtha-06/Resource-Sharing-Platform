@@ -9,10 +9,12 @@ function Profile() {
   const name = user?.name;
   const email = user?.email;
   const [redirect,setRedirect] = useState(null);
+  const link = 'https://resource-sharing-platform.onrender.com';
+
  
 
   const handleClick=async()=>{
-      await axios.post('/api/logout');
+      await axios.post(`${link}/api/logout`);
       setUser(null);
       setRedirect('/');
   }
