@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors({
     credentials:true,
-    origin:['http://localhost:5173']
+    origin:['http://localhost:5173','https://resource-sharing-platform-1.onrender.com']
 }));
 app.use('/PDFuploads',express.static(path.join(__dirname,'PDFuploads')));
 
@@ -93,9 +93,9 @@ app.post('/api/login',async(req,res)=>{
              }else{
                 return res.cookie('TOKEN',token,{
                     httpOnly:true,
-                    sameSite:'lax',
+                    sameSite:'none',
                     expires: new Date(Date.now() + 7*24*60*60*1000),
-                    secure:false
+                    secure:true
                 }).status(200).json({_id: is_exist._id,
                                       name: is_exist.name,
                                       email: is_exist.email})
