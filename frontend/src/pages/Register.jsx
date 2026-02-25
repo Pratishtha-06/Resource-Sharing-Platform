@@ -32,7 +32,7 @@ function Register() {
        return;
       }
 
-      const response = await axios.post(`${link}/register`,{name,email,password},{withCredentials:true});
+      const response = await axios.post(`${link}/api/register`,{name,email,password},{withCredentials:true});
       setError(response.data.message);
       console.log(response.data.message);
 
