@@ -237,7 +237,7 @@ app.delete('/api/delete-upload/:id',authMiddleware,async(req,res)=>{
 //All PDFs
 app.get('/api/get-pdfs',async(req,res)=>{
    try{
-    const allPDF = await PYQ.find({});
+    const allPDF = await PYQ.find();
     res.status(200).json({allPDF});
    }catch(err){
     console.log("Error in fetching",err);
@@ -246,18 +246,29 @@ app.get('/api/get-pdfs',async(req,res)=>{
 })
 
 //Find-subject
-app.get('/api/get-subject/:subject',async(req,res)=>{
+app.get('/api/search-pdfs',async(req,res)=>{
+   const {q} = req.query;
+   if(!q) return res.json({results:[]});
+
   try{
-   const {subject} = req.params;
-   const response = await PYQ.find({subject});
-   if(response.length === 0){
-    return res.json({message:"No match found",response});
-   }
-   console.log("Sub",response);
-   res.status(200).json({response});
+   const regex = new RegExp(q,"i");
+
+   const results = await PYQ.find({
+    $or:[
+      {title:regex},
+      {subject:regex},
+      {year:regex},
+      {class:regex}
+    ]
+   })
+   .limit(8)
+   .sort({createdAt:-1})
+
+   console.log("Sub",results);
+   res.status(200).json({results});
   }catch(err){
     console.log("Error:",err);
-    res.status(500).json({message:"Error in fetching"})
+    res.status(500).json({message:"Search failed"})
   }
 })
 

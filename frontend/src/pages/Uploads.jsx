@@ -7,6 +7,7 @@ function Uploads() {
     const [confirm,setConfirm] = useState(false);
     const [selectedID,setSelectedID] = useState(null);
     const [error,setError] = useState('');
+    const link = "https://resource-sharing-platform.onrender.com";
 
     useEffect(()=>{
         axios.get('/api/my-uploads',{withCredentials:true})
@@ -34,7 +35,7 @@ function Uploads() {
     <div>
      {save.length != 0 ? save.map((i)=>(
         <div className='mx-2 d-flex justify-content-between' key={i._id}>
-            <a href={`/PDFuploads/${i.fileName.replace('.pdf.pdf','.pdf')}`}
+            <a href={`${link}/PDFuploads/${i.fileName.replace('.pdf.pdf','.pdf')}`}
                target="_blank" rel="noopener noreferrer" 
                style={{color:'black'}}>
                 {i.class}-{i.title}-{i.subject}

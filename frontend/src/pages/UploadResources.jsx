@@ -14,7 +14,7 @@ function  UploadResources() {
   const [preview,setPriview] = useState(null);
   const [error,setError] = useState('');
   const navigate = useNavigate();
-
+  
   const handleInput=(e)=>{
     const {name,value} = e.target;
     setError('');
@@ -34,7 +34,6 @@ function  UploadResources() {
       return;
     }
     try{
-    console.log(user);
     if(!title||!year||!subject||!file||!classYear){
       setError("All Fields are required");
       return;

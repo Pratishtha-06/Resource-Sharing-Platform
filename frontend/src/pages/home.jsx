@@ -3,7 +3,7 @@ import { Download } from 'lucide-react';
 import { useState , useContext } from 'react';
 import { useEffect } from 'react';
 import { UserContext } from '../components/UserContext';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 
 function Home() {
@@ -20,7 +20,6 @@ function Home() {
    })
    .catch((err)=>{
      console.log("err",err);
-     setError(err);
    })
 
   },[])
@@ -37,22 +36,22 @@ const handleClick=(e)=>{
     <div className='AllFiles'>
       {pdfs.map((i)=>(
         <div className='d-flex flex-column' style={{width:'170px'}} key={i._id}>
-           <embed src={`/PDFuploads/${i.fileName}`} 
+           <embed src={`${link}/PDFuploads/${i.fileName}`} 
                   type="application/pdf" 
-                  width="180" 
-                  height="220"
+                  width="190" 
+                  height="235"
                   style={{borderRadius:'10px'}}
             />
           <a  className="truncate text-truncate" 
               style={{width:'150px',fontSize:'14px',fontWeight:'bold',color:'black'}}
-              href={`/PDFuploads/${i.fileName.replace('.pdf.pdf','.pdf')}`}>
+              href={`${link}/PDFuploads/${i.fileName.replace('.pdf.pdf','.pdf')}`}>
               {i.title}
           </a>
           <div className='d-flex justify-content-between align-items-center'>
             <div className='truncate text-truncate' style={{fontSize:'13px' , width:'90%'}}>{i.class} • {i.subject} </div>
             <a className='d-flex justify-content-center align-items-center'
                onClick={handleClick}
-               href={`/PDFuploads/${i.fileName}`}
+               href={`${link}/PDFuploads/${i.fileName}`}
                download>
               <Download className='download'/>
             </a>  
