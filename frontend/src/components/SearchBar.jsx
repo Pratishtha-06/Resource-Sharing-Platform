@@ -1,14 +1,12 @@
 import { Search } from 'lucide-react'
 import {useEffect, useState } from 'react'
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
 import ScreenSize from '../ScreenSize';
 
 function SearchBar() {
   const [query,setQuery] = useState('');
   const [suggestion,setSuggestion] = useState([]);
   const [load,setLoad] = useState(false);
-  const navigate = useNavigate();
   const screen = ScreenSize();
   const link = 'https://resource-sharing-platform.onrender.com';
 
@@ -52,6 +50,7 @@ function SearchBar() {
 }
 
   return (
+    <>
     <div className='d-flex justify-content-evenly align-items-center gap-1' style={{width:'350px'}}>
         <div style={{display:'flex',flexDirection:'column',gap:'3px',width:'300px',fontSize:'15px'}}>
             <input type='text' 
@@ -69,22 +68,26 @@ function SearchBar() {
                                  setSuggestion([]);
                                  window.open(`${link}/PDFuploads/${pdf.fileName}`,"_blank");}}>
           {highlightText(pdf.title, query)}
-          <div className="search-meta">
-            {pdf.class} • {pdf.subject} • {pdf.year}
-          </div>
-        </div>
-      ))}
-      </div>
+             <div className="search-meta">
+              {pdf.class} • {pdf.subject} • {pdf.year}
+             </div>
+            </div>
+        ))} 
+       </div>
      )}
-        </div>
+    </div>
         <div style={{width:'5px'}}>
         {load && (
           <div className='load'></div>
         )}
         </div>
-        
-
     </div>
+    <div className="no-result">
+     {!load && query && suggestion.length === 0 && (
+          <div>No result found</div>
+     )}
+     </div>
+    </>
   )
 }
 
