@@ -19,6 +19,9 @@ function Layout() {
        <Navbar/>
        }
       <Outlet/>
+      <footer style={{textAlign:'center',background:'#e6e6e6',fontSize:'10px',fontStyle:'italic',width:'100%',position:'fixed',bottom:'0%'}}>
+        Resource Sharing Platform • Built by Pratishtha Nandwal
+      </footer>
     </>
   )
 }

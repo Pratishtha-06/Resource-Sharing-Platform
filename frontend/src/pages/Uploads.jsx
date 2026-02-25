@@ -6,6 +6,7 @@ function Uploads() {
     const [save,setSave] = useState([]);
     const [confirm,setConfirm] = useState(false);
     const [selectedID,setSelectedID] = useState(null);
+    const [load,setLoad] = useState(true);
     const [error,setError] = useState('');
     const link = "https://resource-sharing-platform.onrender.com";
 
@@ -13,9 +14,11 @@ function Uploads() {
         axios.get('/api/my-uploads',{withCredentials:true})
         .then((res)=>{
             setSave(res.data)
+            setLoad(false);
         })
         .catch((err)=>{
-            console.log(err)
+            console.log(err);
+            setLoad(true);
         })
     },[])
 
@@ -47,7 +50,11 @@ function Uploads() {
             </div>
         </div>
      )):(
-        <div className='mx-3 mb-2'>No uploads yet!</div>
+        load ? (        
+            <div className='mx-3 mb-2'>Loading...</div>
+        ):( 
+            <div className='mx-3 mb-2'>No uploads yet!</div>
+        )
      )}
 
     {confirm && (

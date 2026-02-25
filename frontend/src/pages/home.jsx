@@ -39,7 +39,7 @@ const handleClick=(e)=>{
            <embed src={`${link}/PDFuploads/${i.fileName}`} 
                   type="application/pdf" 
                   width="190" 
-                  height="235"
+                  height="250"
                   style={{borderRadius:'10px'}}
             />
           <a  className="truncate text-truncate" 
