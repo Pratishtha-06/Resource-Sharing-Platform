@@ -7,11 +7,6 @@ import '../index.css'
 function Layout() {
   const location = useLocation();
   const route = location.pathname;
-  const {ready} = useContext(UserContext);
-
-  if(!ready){
-   return (<div className='Loading'><div className='load'></div>Loading...</div>)
-  }
 
   return (
     <>
@@ -19,7 +14,7 @@ function Layout() {
        <Navbar/>
        }
       <Outlet/>
-      <footer style={{textAlign:'center',background:'#e6e6e6',fontSize:'10px',fontStyle:'italic',width:'100%',position:'fixed',bottom:'0%'}}>
+      <footer className='footer' style={{background:'#e6e6e6',fontSize:'10px',width:'100%',textAlign:'center'}}>
         Resource Sharing Platform • Built by Pratishtha Nandwal
       </footer>
     </>

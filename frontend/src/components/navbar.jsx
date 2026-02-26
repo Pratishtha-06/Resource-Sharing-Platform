@@ -10,11 +10,11 @@ function Navbar() {
 
   return (
     <>
-    <div className="px-4 pt-3 pt-3 pb-4" style={{background:'#dedede'}}>
-    <div className={`d-flex ${screen<700?'flex-column gap-3':'flex-row'} justify-content-between align-items-center`}>
-      <div className='d-flex gap-2'>
-                  <img src={Logo} style={{width:'40px',height:'40px'}}/>
-                  <Link to={`/`} style={{textDecoration:'none',fontWeight:'bold',fontSize:'25px',color:'#a76ed0'}}>CampusHub</Link>
+    <div className="d-flex justify-content-between px-4 pt-3 pt-3 pb-4 navbar">
+    <div className='navbar-row'>
+      <div className="navbar-brand">
+                  <img src={Logo} className='navbar-logo'/>
+                  <Link to={`/`} className='navbar-title'>CampusHub</Link>
       </div>
       <div>
        <SearchBar/>
@@ -29,4 +29,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default React.memo(Navbar)

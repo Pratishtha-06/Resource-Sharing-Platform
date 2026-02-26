@@ -8,6 +8,7 @@ import Layout from './components/Layout';
 import UploadResources from './pages/UploadResources';
 import UserContextProvider from './components/UserContext';
 import axios from 'axios';
+import AuthGate from './components/AuthGate';
 
 axios.defaults.baseURL='https://resource-sharing-platform.onrender.com';
 axios.defaults.withCredentials=true;
@@ -17,6 +18,7 @@ function App() {
     <>
     <UserContextProvider>
      <BrowserRouter>
+      <AuthGate>
        <Routes>
         <Route element={<Layout/>}>
           <Route index element = {<Home/>}/>
@@ -24,8 +26,9 @@ function App() {
           <Route path='/login' element = {<Login/>}/>         
           <Route path='/my-profile' element={<Profile/>}/>
           <Route path='/upload-resource' element={<UploadResources/>}/>
-         </Route>
+        </Route>
        </Routes>
+      </AuthGate>
      </BrowserRouter>
      </UserContextProvider>
     </>

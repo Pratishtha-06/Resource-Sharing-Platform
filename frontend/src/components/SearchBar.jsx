@@ -30,7 +30,7 @@ function SearchBar() {
     },300)
 
     return ()=>clearTimeout(timer);
-  },[query])
+  },[query,screen])
 
 
   function highlightText(text, query) {
@@ -52,21 +52,23 @@ function SearchBar() {
   return (
     <>
     <div className='d-flex justify-content-evenly align-items-center gap-1' style={{width:'350px'}}>
-        <div style={{display:'flex',flexDirection:'column',gap:'3px',width:'300px',fontSize:'15px'}}>
+        <div className='Input-box'>
             <input type='text' 
                    placeholder=' subject  |  year  |  class  |  sem'
-                   style={{border:'1px solid grey',borderRadius:'15px',width:'100%',padding:'0px 5px'}}
+                   className='Input-bar'
                    value={query}
                    onChange={(e)=>setQuery(e.target.value)}/>
             
         {suggestion.length > 0 && (
-         <div className="search-dropdown" style={{top:(screen < 700?'18%':'10%')}}>
+         <div className="search-dropdown">
           {suggestion.map((pdf) => (
             <div key={pdf._id}
                  className="search-item"
                  onClick={() => {setQuery("");
                                  setSuggestion([]);
-                                 window.open(`${link}/PDFuploads/${pdf.fileName}`,"_blank");}}>
+                                 window.open(`${link}/PDFuploads/${pdf.fileName}`,
+                                 "_blank",
+                                 "noopener,noreferrer");}}>
           {highlightText(pdf.title, query)}
              <div className="search-meta">
               {pdf.class} • {pdf.subject} • {pdf.year}
@@ -83,7 +85,7 @@ function SearchBar() {
         </div>
     </div>
     <div className="no-result">
-     {!load && query && suggestion.length === 0 && (
+     {!load && query.trim() && suggestion.length === 0 && (
           <div>No result found</div>
      )}
      </div>

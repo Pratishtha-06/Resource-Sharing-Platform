@@ -55,7 +55,7 @@ function Login() {
     </div>
   ):(<></>)}
 
-    <div className='d-flex justify-content-center align-items-center'>
+    <div className="Common">
     <form onSubmit={handleSubmit}>
 
       <h4 style={{fontWeight:'bold'}}>Welcome back!</h4>
