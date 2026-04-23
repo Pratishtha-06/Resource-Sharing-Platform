@@ -34,7 +34,6 @@ function Login() {
         return;
       }
      const response = await axios.post(`${link}/api/login`,{email,password},{withCredentials:true});
-     console.log("user",response.data);
 
      if(response.status === 200){
         alert("Login Successful");

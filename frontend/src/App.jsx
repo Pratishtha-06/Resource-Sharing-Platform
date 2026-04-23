@@ -23,7 +23,7 @@ function App() {
     <UserContextProvider>
      <BrowserRouter>
       <AuthGate>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div className='Loading'><div className='load'></div>Loading...</div>}>
        <Routes>
         <Route element={<Layout/>}>
           <Route index element = {<Home/>}/>
