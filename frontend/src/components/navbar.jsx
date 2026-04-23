@@ -4,6 +4,8 @@ import LinkComponent from './Link.jsx'
 import ScreenSize from '../ScreenSize'
 import SearchBar from './SearchBar.jsx'
 import {Link} from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 function Navbar() {
   const screen = ScreenSize();

@@ -1,5 +1,4 @@
-import { Search } from 'lucide-react'
-import {useEffect, useState } from 'react'
+import {useEffect, useState, useRef } from 'react'
 import axios from 'axios';
 import ScreenSize from '../ScreenSize';
 
@@ -7,15 +6,30 @@ function SearchBar() {
   const [query,setQuery] = useState('');
   const [suggestion,setSuggestion] = useState([]);
   const [load,setLoad] = useState(false);
+  const dropdownRef  = useRef();
   const screen = ScreenSize();
   const link = 'https://resource-sharing-platform.onrender.com';
+
+  useEffect(() => {
+  function handleDropdown(event) {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target)
+    ) {
+      setSuggestion([]);
+    }
+  }
+  document.addEventListener("mousedown", handleDropdown);
+  return () => {
+    document.removeEventListener("mousedown", handleDropdown);
+  };
+  }, []);
 
   useEffect(()=>{
     if(!query.trim()){
       setSuggestion([]);
       return;
     }
-    console.log("size",screen);
     const timer = setTimeout(async()=>{
      try{
       setLoad(true);
@@ -51,7 +65,9 @@ function SearchBar() {
 
   return (
     <>
-    <div className='d-flex justify-content-evenly align-items-center gap-1' style={{width:'350px'}}>
+    <div className='d-flex justify-content-evenly align-items-center gap-1' 
+         style={{width:'350px'}}
+         ref={dropdownRef}>
         <div className='Input-box'>
             <input type='text' 
                    placeholder=' subject  |  year  |  class  |  sem'
