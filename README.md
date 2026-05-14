@@ -59,3 +59,15 @@ A web application that allows students to upload, share, and access previous yea
 # **📌 Author**
 
 Pratishtha Nandwal
+
+# **📸Screenshots**
+
+<img width="1920" height="792" alt="HomePage" src="https://github.com/user-attachments/assets/bb7257c3-acd1-4f53-b4d4-1908133ce37e" />
+
+<img width="1903" height="831" alt="UploadPage" src="https://github.com/user-attachments/assets/9aa7b956-b92b-4cfb-8725-b9acf2642e22" />
+
+<img width="1920" height="768" alt="AccountPage" src="https://github.com/user-attachments/assets/a46fb04d-5045-4367-af56-0bbedfe129ff" />
+
+<img width="1920" height="818" alt="FilterPage" src="https://github.com/user-attachments/assets/1e645af0-f499-40a8-9360-af45ffdcff4b" />
+
+
