@@ -11,9 +11,10 @@ function  UploadResources() {
   const [classYear,setClassYear] = useState('');
   const [file,setFile] = useState(null);
   const [uploaded,setUploaded] = useState(null);
-  const [preview,setPriview] = useState(null);
+  const [preview,setPreview] = useState(null);
   const [error,setError] = useState('');
   const navigate = useNavigate();
+  const MAX_FILE_SIZE = 25*1024*1024;
   
   const handleInput=(e)=>{
     const {name,value} = e.target;
@@ -44,6 +45,14 @@ function  UploadResources() {
     newData.append('subject',subject);
     newData.append('classYear',classYear);
     newData.append('file',file);
+
+    
+    if(file.size > MAX_FILE_SIZE){
+      setError("File size should be less than 25 MB");
+      return;
+    }else{
+      setError("");
+    }
     
     const response =  await axios.post('/api/upload-resource',newData,{withCredentials:true})
     setUploaded(response.data.fileUrl);
@@ -104,7 +113,7 @@ function  UploadResources() {
                accept='.pdf'
                name='file'
                onChange={(e)=>{setFile(e.target.files[0])
-                              setPriview(URL.createObjectURL(e.target.files[0]))
+                              setPreview(URL.createObjectURL(e.target.files[0]))
                }}/>
       </div>
       {preview && (
