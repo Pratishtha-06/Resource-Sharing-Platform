@@ -5,10 +5,9 @@ const dotenv = require('dotenv');
 const user = require('./model/userSchema');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const PYQ = require('./model/pyq');
-const path =  require('path');
-const fs = require('fs');
 const app = express();
 
 app.use(cookieParser());
@@ -18,13 +17,15 @@ app.use(cors({
     credentials:true,
     origin:['http://localhost:5173','https://resource-sharing-platform-1.onrender.com']
 }));
-app.use('/PDFuploads',express.static(path.join(__dirname,'PDFuploads')));
 
 dotenv.config({path:'./.env'});
 
 const PORT = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
 const JWT_SECRET = process.env.JWT_SECRET;
+const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
+const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
+const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
 
 mongoose.connect(MONGO_URL)
 .then(()=>{console.log("Connected to db")}) 
@@ -46,6 +47,7 @@ const getDataFromReq =(req)=>{
   })
 }
 
+//auth middleware
 const authMiddleware=async(req,res,next)=>{
   try{
    const userData = await getDataFromReq(req);
@@ -57,6 +59,7 @@ const authMiddleware=async(req,res,next)=>{
   }
 
 }
+
 
 //Register
 app.post('/api/register',async(req,res)=>{
@@ -145,22 +148,7 @@ app.post('/api/logout',(req,res)=>{
 })
 
 //Resource Upload
-const storage = multer.diskStorage({
-  destination: function (req, file, cb){
-    cb(null, './PDFuploads')
-  },
-
-  filename: function (req, file, cb){
-    const uniqueSuffix = Date.now()
-    const titleSuffix = (req.body.title)
-     .toLowerCase()
-     .trim()
-     .replace(/[^a-z0-9]+/g, '-') 
-     .replace(/(^-|-$)+/g, '')
-    cb(null, `${uniqueSuffix}${titleSuffix}.pdf`)
-  }
-})
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage ,
     fileFilter:function(req,file,cb){
       if(file.mimetype === 'application/pdf'){
@@ -176,7 +164,19 @@ app.post('/api/upload-resource',authMiddleware,upload.single("file"),async(req,r
   if (!req.file) {
     return res.status(400).json({ message: "PDF file is required" });
   }
-
+    const result = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream(
+          {
+            resource_type: "raw", // important for PDFs
+            folder: "pdfs"
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        ).end(req.file.buffer);
+      });
+  
   const {title,year,subject,classYear} = req.body;
   const pyqCreate = await PYQ.create({
      title:title,
@@ -184,11 +184,10 @@ app.post('/api/upload-resource',authMiddleware,upload.single("file"),async(req,r
      subject:subject,
      class:classYear,
      postedBy:req.user._id,
-     fileName:req.file.filename
+     fileURL:result.secure_url,
+     public_id:result.public_id
   })
-  res.json({...pyqCreate._doc,
-         fileUrl : `${req.file.filename}`
-  });
+  res.json(pyqCreate._doc);
 }catch(err){
   console.log("error uploading file:",err);
   res.status(500).json({message:"Couldn't upload file"});
@@ -214,18 +213,16 @@ app.delete('/api/delete-upload/:id',authMiddleware,async(req,res)=>{
     res.status(404).json({message:"File not found"});
    }
 
-   if(pdf.postedBy.toString() === req.user.id){
+   if(pdf.postedBy.toString() === req.user._id){
     res.status(404).json({message:"Not allowed"});
    }
    
-   const filePath = path.join(__dirname,'PDFuploads',pdf.fileName);
-   if(fs.existsSync(filePath)){
-     fs.unlinkSync(filePath);
+   if(pdf.public_id){
+    await cloudinary.uploader.destroy(pdf.public_id,{resource_type:"raw"});
    }
 
    await PYQ.findByIdAndDelete(req.params.id);
    res.json({ message: 'PDF deleted successfully' });
-
 
   }catch(err){
     console.log("Error in deleting",err);

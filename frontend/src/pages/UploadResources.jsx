@@ -10,7 +10,6 @@ function  UploadResources() {
   const [subject,setSubject] = useState('');
   const [classYear,setClassYear] = useState('');
   const [file,setFile] = useState(null);
-  const [uploaded,setUploaded] = useState(null);
   const [preview,setPreview] = useState(null);
   const [error,setError] = useState('');
   const navigate = useNavigate();
@@ -55,7 +54,6 @@ function  UploadResources() {
     }
     
     const response =  await axios.post('/api/upload-resource',newData,{withCredentials:true})
-    setUploaded(response.data.fileUrl);
     alert("PDF Uploaded Successfully");
 
    }catch(err){
@@ -117,7 +115,7 @@ function  UploadResources() {
                }}/>
       </div>
       {preview && (
-      <a  target="blank"
+      <a  target="_blank"
           href={`${preview}`}
           className='mx-3'>View pdf</a>
       )}

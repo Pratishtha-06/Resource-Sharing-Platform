@@ -17,7 +17,11 @@ const PYQSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    fileName:{
+    fileURL:{
+        type:String,
+        required:true
+    },
+    public_id:{     
         type:String,
         required:true
     },

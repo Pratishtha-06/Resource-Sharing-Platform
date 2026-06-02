@@ -22,6 +22,8 @@ function Uploads() {
         })
     },[])
 
+    console.log(save);
+
     const handleDelete=async()=>{
         try{
           const response = await axios.delete(`/api/delete-upload/${selectedID}`, {withCredentials: true});
@@ -38,7 +40,7 @@ function Uploads() {
     <div>
      {save.length != 0 ? save.map((i)=>(
         <div className='mx-2 d-flex justify-content-between' key={i._id}>
-            <a href={`${link}/PDFuploads/${i.fileName.replace('.pdf.pdf','.pdf')}`}
+            <a href={i.fileURL}
                target="_blank" rel="noopener noreferrer" 
                style={{color:'black'}}>
                 {i.class}-{i.title}-{i.subject}
@@ -48,6 +50,7 @@ function Uploads() {
                  style={{cursor:'pointer'}}>
                 <Trash  style={{width:'15px'}}/>
             </div>
+            <div>{i.fileURL}</div>
         </div>
      )):(
         load ? (        
