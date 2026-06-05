@@ -173,7 +173,7 @@ app.post('/api/upload-resource',authMiddleware,upload.single("file"),async(req,r
     const result = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream(
           {
-            resource_type: "raw", // important for PDFs
+            resource_type: "auto", // important for PDFs
             folder: "pdfs"
           },
           (error, result) => {

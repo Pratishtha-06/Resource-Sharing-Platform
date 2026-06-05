@@ -19,7 +19,6 @@ function Uploads({save,setConfirm,setSelectedID,load}) {
                  style={{cursor:'pointer'}}>
                 <Trash  style={{width:'15px'}}/>
             </div>
-
         </div>
      )):(
         load ? (        
