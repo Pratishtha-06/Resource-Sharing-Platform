@@ -1,4 +1,4 @@
-import React, { useContext ,useState} from 'react'
+import React, { useContext ,useState, useEffect} from 'react'
 import { UserContext } from '../components/UserContext'
 import axios from 'axios'
 import { Navigate } from 'react-router-dom';
@@ -6,19 +6,34 @@ import Uploads from './Uploads';
 
 function Profile() {
   const {user,setUser} = useContext(UserContext);
+  const [redirect,setRedirect] = useState(null);
+  const [save,setSave] = useState([]);
+  const [confirm,setConfirm] = useState(false);
+  const [selectedID,setSelectedID] = useState(null);
+  const [load,setLoad] = useState(true);
+  const [error,setError] = useState('');
   const name = user?.name;
   const email = user?.email;
-  const [redirect,setRedirect] = useState(null);
   const link = 'https://resource-sharing-platform.onrender.com';
 
  
+    useEffect(()=>{
+        axios.get('/api/my-uploads',{withCredentials:true})
+        .then((res)=>{
+            setSave(res.data)
+            setLoad(false);
+        })
+        .catch((err)=>{
+            console.log(err);
+            setLoad(true);
+        })
+    },[])
 
   const handleClick=async()=>{
       await axios.post(`${link}/api/logout`);
       setUser(null);
       setRedirect('/');
   }
-
 
   if(redirect){
     return <Navigate to={'/'}/>
@@ -28,28 +43,68 @@ function Profile() {
         return <Navigate to={'/login'}/>
   }
 
+  
+  const handleDelete=async()=>{
+   try{
+      const response = await axios.delete(`/api/delete-upload/${selectedID}`, {withCredentials: true});
+      setConfirm(false);
+      setSave(prev=>prev.filter(item=>item._id !== selectedID));
+      setSelectedID(null);
+      setError(response.data.message);
+   }catch(err){
+            console.log("ERROR:",err);
+   }
+  }
 
   return (
     <>
-    <div style={{border:'1px solid grey',borderRadius:'5px',margin:'20px 20px',padding:'5px 0px 10px 10px'}}>
-      <div style={{width:'fit-content',padding:'0px 5px',backgroundColor:'white',position:'relative',bottom:'20px',left:'15px',fontSize:'larger',fontWeight:'bold'}}>
-            Profile
-      </div>
-        <div>{name}</div>
-        <div>{email}</div>
-        <button className='bg-danger' style={{textAlign:'center',border:'none',color:'white',borderRadius:'3px',marginTop:'15px',width:'80px',height:'30px'}}
-                onClick={handleClick}>
-                Logout
-        </button>
+<div className="profileContainer">
+
+  {/* Profile Card */}
+  <div className="card">
+    <div className="cardTitle">Profile</div>
+
+    <div className="info">{name}</div>
+    <div className="info">{email}</div>
+
+    <button className="btn-danger" onClick={handleClick}>
+      Logout
+    </button>
+  </div>
+
+  {/* Uploads Card */}
+  <div className="card">
+    <div className="cardTitle">Uploads</div>
+
+    <Uploads save={save} setConfirm={setConfirm} setSelectedID={setSelectedID} load={load} />
+  </div>
+
+    {confirm && (
+        <div className="modal-overlay">
+         <div className="box">
+         <h3 className="modal-title">Delete PDF</h3>
+
+        <p className="modal-content">
+          Are you sure you want to permanently delete this PDF?
+        </p>
+        <div className="modal-actions">
+
+        <button className="confirmBtn cancel" onClick={() => setConfirm(false)}> Cancel </button>
+
+      <button
+        className="confirmBtn delete"
+        onClick={handleDelete}
+      >
+        Delete
+      </button>
 
     </div>
-    
-    <div style={{border:'1px solid grey',borderRadius:'5px',margin:'20px 20px'}}>
-      <div style={{width:'fit-content',padding:'0px 5px',backgroundColor:'white',position:'relative',bottom:'15px',left:'15px',fontSize:'larger',fontWeight:'bold'}}>
-        Uploads
-      </div>
-      <Uploads/>
-    </div>
+
+  </div>
+</div>
+
+    )}
+</div>
     </>
   )
 }

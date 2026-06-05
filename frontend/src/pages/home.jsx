@@ -35,18 +35,17 @@ const handleClick=(e)=>{
   return (
     <div className='AllFiles'>
       {pdfs.map((i)=>(
-        <div className='d-flex flex-column' style={{width:'170px'}} key={i._id}>
+        <div className='pdf-file' key={i._id}>
            <FileText size={60}/>
           <a  className="truncate text-truncate pdf-title" 
-              href={`${link}/PDFuploads/${i.fileName.replace('.pdf.pdf','.pdf')}`}
+              href={i.fileURL}
               target='blank'>
               {i.title}
           </a>
           <div className='d-flex justify-content-evenly align-items-center'>
             <div className='truncate text-truncate pdf-detail'>{i.class} • {i.subject} </div>
-            <a className='Common'
-               onClick={handleClick}
-               href={`${link}/PDFuploads/${i.fileName}`}
+            <a onClick={handleClick}
+               href={i.fileURL}
                download>
               <Download className='download'/>
             </a>  

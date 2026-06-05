@@ -54,44 +54,59 @@ function Register() {
      </div>
    ):(<></>)}
  
-     <div className="Common">
-     <form onSubmit={handleSubmit}>
- 
-       <h4 style={{fontWeight:'bold'}}>New here?</h4>
-       <div>Create your account in just a few steps.</div>
- 
-       <div className='d-flex flex-column my-4'>
-        <input placeholder='yourname'
-               type="text"
-               name="name"
-               onChange={handleInput}
-               style={{paddingLeft:'5px',width:'350px',height:'35px',border:'1px solid grey',borderRadius:'3px',margin:'10px 0px'}}/>
-       <input placeholder='youremail@gmail.com'
-               type="email"
-               name="email"
-               onChange={handleInput}
-               style={{paddingLeft:'5px',width:'350px',height:'35px',border:'1px solid grey',borderRadius:'3px',margin:'10px 0px'}}/>
-       <input placeholder='password'
-               type="password" 
-               name="password"
-               onChange={handleInput}
-               style={{paddingLeft:'5px',width:'350px',height:'35px',border:'1px solid grey',borderRadius:'3px',margin:'10px 0px'}}/>
-       
-       <div style={{height:'50px'}}>
-       {error&&(
-         <div style={{color:'red',fontSize:'small'}}>{error}</div>
-       )}
-       </div>
-      
-       <button type='submit' className='Button'>
-               Register</button>
-       </div>
-       
-       <div>Need account? 
-         <Link to={'/login'} style={{color:'#a76ed0',textDecoration:'none',fontWeight:'bold',fontStyle:'italic'}}> Login </Link> here!
-       </div>
-     </form>
-     </div>
+<div className="authWrapper">
+
+  <form className="authCard" onSubmit={handleSubmit}>
+
+    <h2 className="authTitle">New here?</h2>
+
+    <p className="authSubtitle">
+      Create your account in just a few steps.
+    </p>
+
+    <div className="authFields">
+
+      <input
+        type="text"
+        name="name"
+        placeholder="yourname"
+        onChange={handleInput}
+      />
+
+      <input
+        type="email"
+        name="email"
+        placeholder="youremail@gmail.com"
+        onChange={handleInput}
+      />
+
+      <input
+        type="password"
+        name="password"
+        placeholder="password"
+        onChange={handleInput}
+      />
+
+    </div>
+
+    {error && (
+      <div className="authError">
+        {error}
+      </div>
+    )}
+
+    <button type="submit" className="authBtn">
+      Register
+    </button>
+
+    <p className="authFooter">
+      Already have an account?
+      <Link to="/login"> Login</Link>
+    </p>
+
+  </form>
+
+</div>
      </div>
   )
 }

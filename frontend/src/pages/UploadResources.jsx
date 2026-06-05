@@ -61,76 +61,83 @@ function  UploadResources() {
    }  
   }
   return (
-    <form className='d-flex flex-column InputBox'
-          onSubmit={handleSubmit}>
-      <div style={{width:'fit-content',padding:'0px 5px',backgroundColor:'white',position:'relative',bottom:'15px',left:'15px',fontSize:'larger',fontWeight:'bold'}}>
-            Upload
-      </div>
-      <div className='d-flex flex-column w-100'>
-      <div className="m-2" style={{fontWeight:'bold'}}>
-        Title:
-        <input className="InputFields" 
-               placeholder="Eg.Computer Science Minor"
-               type='text'
-               name='title'
-               value={title}
-               onChange={handleInput}/>
-      </div>
-      <div className="m-2" style={{fontWeight:'bold'}}>
-        Year:
-        <input className="InputFields" 
-               placeholder="Eg.2024"
-               type='text'
-               name='year'
-               value={year}
-               onChange={handleInput}/>
-      </div>
-      <div className="m-2" style={{fontWeight:'bold'}}>
-        Class:
-        <input className="InputFields" 
-               placeholder="Eg.BSc I year"
-               type='text'
-               name='classYear'
-               value={classYear}
-               onChange={handleInput}/>
-      </div>
-      <div className="m-2" style={{fontWeight:'bold'}}>
-        Subject:
-        <input className="InputFields" 
-               placeholder="Eg.Operating System"
-               type='text'
-               name='subject'
-               value={subject}
-               onChange={handleInput}/>
-      </div>
-      <div className="m-2" style={{fontWeight:'bold'}}>
-        Upload:
-        <input className='w-100 m-2'
-               placeholder="Upload pdf file"
-               type='file'
-               accept='.pdf'
-               name='file'
-               onChange={(e)=>{setFile(e.target.files[0])
-                              setPreview(URL.createObjectURL(e.target.files[0]))
-               }}/>
-      </div>
-      {preview && (
-      <a  target="_blank"
-          href={`${preview}`}
-          className='mx-3'>View pdf</a>
-      )}
-      <div className="m-2" style={{height:'50px'}}>
-      {error&&(
-        <div style={{color:'red',fontSize:'small'}}>{error}</div>
-      )}
-      </div>
+  <form className="uploadCard" onSubmit={handleSubmit}>
 
-      <div className="mx-2 my-3">
-        <button type="submit"
-                className='uploadBtn'>Upload</button>
-      </div>
-      </div>
-    </form>
+  <div className="uploadTitle">Upload Resource</div>
+
+  <div className="formGrid">
+
+    <div className="field">
+      <label>Title</label>
+      <input
+        type="text"
+        name="title"
+        value={title}
+        placeholder="Eg. Computer Science Minor"
+        onChange={handleInput}
+      />
+    </div>
+
+    <div className="field">
+      <label>Year</label>
+      <input
+        type="text"
+        name="year"
+        value={year}
+        placeholder="Eg. 2024"
+        onChange={handleInput}
+      />
+    </div>
+
+    <div className="field">
+      <label>Class</label>
+      <input
+        type="text"
+        name="classYear"
+        value={classYear}
+        placeholder="Eg. BSc 1st Year"
+        onChange={handleInput}
+      />
+    </div>
+
+    <div className="field">
+      <label>Subject</label>
+      <input
+        type="text"
+        name="subject"
+        value={subject}
+        placeholder="Eg. Operating System"
+        onChange={handleInput}
+      />
+    </div>
+
+    <div className="field full">
+      <label>Upload PDF</label>
+      <input
+        type="file"
+        accept=".pdf"
+        onChange={(e) => {
+          setFile(e.target.files[0]);
+          setPreview(URL.createObjectURL(e.target.files[0]));
+        }}
+      />
+    </div>
+
+  </div>
+
+  {preview && (
+    <a className="previewLink" href={preview} target="_blank">
+      View selected PDF
+    </a>
+  )}
+
+  {error && <div className="errorText">{error}</div>}
+
+  <button className="uploadBtn" type="submit">
+    Upload
+  </button>
+
+</form>
   )
 }
 

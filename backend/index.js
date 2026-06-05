@@ -219,7 +219,7 @@ app.delete('/api/delete-upload/:id',authMiddleware,async(req,res)=>{
     res.status(404).json({message:"File not found"});
    }
 
-   if(pdf.postedBy.toString() === req.user._id){
+   if(pdf.postedBy.toString() !== req.user._id){
     res.status(404).json({message:"Not allowed"});
    }
    

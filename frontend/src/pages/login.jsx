@@ -47,46 +47,54 @@ function Login() {
     }
     }
   return (
-    <div className='d-flex justify-content-evenly align-items-center' style={{height:'100%'}}>
+  <div className='d-flex justify-content-evenly align-items-center' style={{height:'100%'}}>
   {screen > 750 ?(
     <div>
       <img src={Image}/>
     </div>
   ):(<></>)}
 
-    <div className="Common">
-    <form onSubmit={handleSubmit}>
+    <div className="authWrapper">
 
-      <h4 style={{fontWeight:'bold'}}>Welcome back!</h4>
-      <div>Please log in to access your account.</div>
+  <form className="authCard" onSubmit={handleSubmit}>
 
-      <div className='d-flex flex-column my-4'>
-      <input placeholder='youremail@gmail.com' 
-             type="email"
-             name="email"
-             onChange={handleInput}
-             style={{paddingLeft:'5px',width:'350px',height:'35px',border:'1px solid grey',borderRadius:'3px',margin:'10px 0px'}}/>
-      <input placeholder='password'
-             type="password" 
-             name="password"
-             onChange={handleInput}
-             style={{paddingLeft:'5px',width:'350px',height:'35px',border:'1px solid grey',borderRadius:'3px',margin:'10px 0px'}}/>
-      
-      <div style={{height:'50px'}}>
-      {error&&(
-        <div style={{color:'red',fontSize:'small'}}>{error}</div>
-      )}
-      </div>
+    <h2 className="authTitle">Welcome back</h2>
+    <p className="authSubtitle">
+      Log in to access your account
+    </p>
 
-      <button type='submit' className='Button'>
-              Login</button>
-      </div>
-      
-      <div>Need account? 
-        <Link to={'/register'} style={{color:'#a76ed0',textDecoration:'none',fontWeight:'bold',fontStyle:'italic'}}> Register </Link> here!
-      </div>
-    </form>
+    <div className="authFields">
+
+      <input
+        placeholder="youremail@gmail.com"
+        type="email"
+        name="email"
+        onChange={handleInput}
+      />
+
+      <input
+        placeholder="password"
+        type="password"
+        name="password"
+        onChange={handleInput}
+      />
+
     </div>
+
+    {error && <div className="authError">{error}</div>}
+
+    <button type="submit" className="authBtn">
+      Login
+    </button>
+
+    <p className="authFooter">
+      Need an account?
+      <Link to="/register"> Register</Link>
+    </p>
+
+  </form>
+
+  </div>
     </div>
   )
 }

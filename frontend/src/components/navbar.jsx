@@ -12,7 +12,7 @@ function Navbar() {
 
   return (
     <>
-    <div className="d-flex justify-content-between px-4 pt-3 pt-3 pb-4 navbar">
+    <div className="d-flex justify-content-between px-4 pt-3 pt-3 pb-4">
     <div className='navbar-row'>
       <div className="navbar-brand">
                   <img src={Logo} className='navbar-logo'/>
