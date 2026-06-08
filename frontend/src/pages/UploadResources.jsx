@@ -55,6 +55,12 @@ function  UploadResources() {
     
     const response =  await axios.post('/api/upload-resource',newData,{withCredentials:true})
     alert("PDF Uploaded Successfully");
+    setTitle('');
+    setYear('');
+    setSubject('');
+    setClassYear('');
+    setFile(null);
+    setPreview(null);
 
    }catch(err){
     console.log("Error:",err);
