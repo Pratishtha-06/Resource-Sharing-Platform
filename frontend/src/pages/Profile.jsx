@@ -25,7 +25,9 @@ function Profile() {
             setError('No uploads yet!');
         })
         .catch((err)=>{
-            console.log(err);
+            console.log("Error:", err);
+            console.log("Status:", err.response?.status);
+            console.log("Data:", err.response?.data);
             setLoad(false);
             setError('Failed to load uploads. Please try again later.');
         })
