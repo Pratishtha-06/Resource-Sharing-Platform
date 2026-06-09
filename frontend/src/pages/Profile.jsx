@@ -22,10 +22,12 @@ function Profile() {
         .then((res)=>{
             setSave(res.data)
             setLoad(false);
+            setError('No uploads yet!');
         })
         .catch((err)=>{
             console.log(err);
-            setLoad(true);
+            setLoad(false);
+            setError('Failed to load uploads. Please try again later.');
         })
     },[])
 
@@ -76,7 +78,7 @@ function Profile() {
   <div className="card">
     <div className="cardTitle">Uploads</div>
 
-    <Uploads save={save} setConfirm={setConfirm} setSelectedID={setSelectedID} load={load} />
+    <Uploads save={save} setConfirm={setConfirm} setSelectedID={setSelectedID} load={load} error={error}/>
   </div>
 
     {confirm && (

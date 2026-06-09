@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState,useEffect } from 'react'
 import {Trash} from 'lucide-react'
 
-function Uploads({save,setConfirm,setSelectedID,load}) {
+function Uploads({save,setConfirm,setSelectedID,load,error}) {
 
   return (
 <>
@@ -21,11 +21,7 @@ function Uploads({save,setConfirm,setSelectedID,load}) {
             </div>
         </div>
      )):(
-        load ? (        
-            <div className='mx-3 mb-2'>Loading...</div>
-        ):( 
-            <div className='mx-3 mb-2'>No uploads yet!</div>
-        )
+        load && (<div className='mx-3 mb-2'>{error}</div>)
      )}
 
     </div>
