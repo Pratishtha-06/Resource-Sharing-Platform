@@ -422,7 +422,6 @@ body {
 .Loading{
     display: flex;
     position: relative;
-    top: 50%;
     gap:5px;
     border-radius: 15px;
     justify-content: center;
@@ -431,13 +430,8 @@ body {
 }
 
 footer{
-    position: static;
-}
-@media (min-width:768px) {
-    footer{
-        position: fixed;
-        bottom: 0;
-    }
+  position: fixed;
+  bottom: 0;
 }
 
 /* Login Page & Signup Page */
@@ -524,4 +518,34 @@ footer{
   font-weight: 600;
 }
 
+/* Loading State */
+.uploadProgress {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
 
+.uploadProgressFill {
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    #a76ed0,
+    #8645c7
+  );
+  border-radius: 999px;
+  animation: loading 1s infinite ease-in-out;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(350%);
+  }
+}

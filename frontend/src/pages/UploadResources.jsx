@@ -11,6 +11,7 @@ function  UploadResources() {
   const [classYear,setClassYear] = useState('');
   const [file,setFile] = useState(null);
   const [preview,setPreview] = useState(null);
+  const [uploading,setUploading] = useState(false);
   const [error,setError] = useState('');
   const navigate = useNavigate();
   const MAX_FILE_SIZE = 25*1024*1024;
@@ -54,6 +55,7 @@ function  UploadResources() {
       setError("");
     }
     
+    setUploading(true);
     const response =  await axios.post('/api/upload-resource',newData,{withCredentials:true})
     alert("PDF Uploaded Successfully");
     setTitle('');
@@ -65,7 +67,11 @@ function  UploadResources() {
 
    }catch(err){
     console.log("Error:",err);
-   }  
+   } 
+   finally{
+    setUploading(false);
+   } 
+   
   }
   return (
   <form className="uploadCard" onSubmit={handleSubmit}>
@@ -140,9 +146,15 @@ function  UploadResources() {
 
   {error && <div className="errorText">{error}</div>}
 
-  <button className="uploadBtn" type="submit">
-    Upload
+  <button className="uploadBtn" type="submit" disabled={uploading}>
+    {uploading ? "Uploading..." : "Upload"}
   </button>
+
+  {uploading && (
+  <div className="uploadProgress">
+    <div className="uploadProgressFill"></div>
+  </div>
+  )}
 
 </form>
   )
