@@ -285,12 +285,6 @@ body {
   background: #4f46e5;
 }
 
-.formGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-
 .field {
   display: flex;
   flex-direction: column;

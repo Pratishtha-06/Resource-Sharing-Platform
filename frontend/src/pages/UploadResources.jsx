@@ -38,6 +38,7 @@ function  UploadResources() {
       setError("All Fields are required");
       return;
     }
+
     const newData =  new FormData();
     newData.append('title',title);
     newData.append('year',year);
@@ -71,7 +72,7 @@ function  UploadResources() {
 
   <div className="uploadTitle">Upload Resource</div>
 
-  <div className="formGrid">
+  <div>
 
     <div className="field">
       <label>Title</label>
