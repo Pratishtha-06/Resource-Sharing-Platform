@@ -203,7 +203,9 @@ app.post('/api/upload-resource',authMiddleware,upload.single("file"),async(req,r
 //Get my-uploads
 app.get('/api/my-uploads',authMiddleware,async(req,res)=>{
   try{
+    console.log("User ID:", req.user._id);
     const myPDFs = await PYQ.find({postedBy:req.user._id}).sort({createdAt:-1});
+     console.log("PDF Count:", myPDFs.length);
     res.status(200).json(myPDFs);
   }catch(err){   
     console.log("Error in fetch:",err);
