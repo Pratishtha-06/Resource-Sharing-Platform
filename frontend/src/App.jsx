@@ -22,19 +22,17 @@ function App() {
     <>
     <UserContextProvider>
      <BrowserRouter>
-      <AuthGate>
       <Suspense fallback={<div className='Loading'><div className='load'></div>Loading...</div>}>
        <Routes>
         <Route element={<Layout/>}>
           <Route index element = {<Home/>}/>
           <Route path='/register' element = {<Register/>}/>
           <Route path='/login' element = {<Login/>}/>         
-          <Route path='/my-profile' element={<Profile/>}/>
-          <Route path='/upload-resource' element={<UploadResources/>}/>
+          <Route path='/my-profile' element={ <AuthGate><Profile/></AuthGate>}/>
+          <Route path='/upload-resource' element={<AuthGate><UploadResources/></AuthGate>}/>
         </Route>
        </Routes>
       </Suspense> 
-      </AuthGate>
      </BrowserRouter>
      </UserContextProvider>
     </>
